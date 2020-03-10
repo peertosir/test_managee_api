@@ -7,6 +7,9 @@ export class UpdateProjectDto {
     @IsString()
     @IsOptional()
     description: string;
+    @IsArray()
+    @IsOptional()
+    urls: string[];
     @IsOptional()
     @IsNumber()
     project_manager: number;
