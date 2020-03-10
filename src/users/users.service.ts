@@ -2,8 +2,8 @@ import {Injectable, NotFoundException, UnprocessableEntityException} from '@nest
 import {InjectRepository} from "@nestjs/typeorm";
 import {UserRepository} from "./user.repository";
 import {CreateUserDto} from "./dto/create-user.dto";
-import {AuthDto} from "../auth/dto/auth.dto";
 import {User} from "./user.entity";
+import {UpdateUserDto} from "./dto/update-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -11,6 +11,23 @@ export class UsersService {
 
     async createUser(createUserDto: CreateUserDto) {
         return await this.userRepository.createUser(createUserDto);
+    }
+
+    async updateUser(id:number, updateUserDto: UpdateUserDto) {
+        const user = await this.getUserById(id);
+        const {email, firstName, lastName} = updateUserDto;
+        if (email) {
+            user.email = email;
+        }
+        if (firstName) {
+            user.firstName = firstName;
+        }
+        if (lastName) {
+            user.lastName = lastName;
+        }
+
+        await user.save();
+        return user
     }
 
     async getUserByEmail(user_email: string) {

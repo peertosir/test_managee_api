@@ -1,14 +1,20 @@
-import {ClassSerializerInterceptor, Controller, Get, Param, ParseIntPipe, Patch, UseInterceptors} from '@nestjs/common';
-import {InjectRepository} from "@nestjs/typeorm";
-import {UserRepository} from "./user.repository";
+import {
+    Body,
+    ClassSerializerInterceptor,
+    Controller,
+    Get,
+    Param,
+    ParseIntPipe,
+    Patch,
+    UseInterceptors
+} from '@nestjs/common';
 import {UsersService} from "./users.service";
+import {UpdateUserDto} from "./dto/update-user.dto";
 
 @Controller('api/users')
 @UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
-    constructor(
-        private usersService: UsersService
-        ){}
+    constructor(private usersService: UsersService){}
 
     @Get('/:id')
     getUserById(@Param('id', ParseIntPipe) id: number) {
@@ -21,7 +27,8 @@ export class UsersController {
     }
 
     @Patch('/:id')
-    updateUser() {
+    updateUser(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
+        return this.usersService.updateUser(id, updateUserDto);
     }
 
     @Patch('/:id/ban')

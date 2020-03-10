@@ -40,7 +40,7 @@ export class ProjectsService {
     async deleteProject(id: number): Promise<void> {
         const result = await this.projectRepository.delete(id);
         if (result.affected === 0) {
-            throw new NotFoundException('Task not exist')
+            throw new NotFoundException('Project not exist')
         }
     }
 

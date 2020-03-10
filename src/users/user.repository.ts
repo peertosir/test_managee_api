@@ -3,17 +3,20 @@ import {User} from "./user.entity";
 import {CreateUserDto} from "./dto/create-user.dto";
 import {ConflictException, InternalServerErrorException} from "@nestjs/common";
 import * as bcrypt from 'bcrypt';
+import {last} from "rxjs/operators";
 
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
     async createUser(createUserDto: CreateUserDto): Promise<void> {
-        const {email, password} = createUserDto;
+        const {email, password, firstName, lastName} = createUserDto;
 
         const user = new User();
         user.salt = await bcrypt.genSalt();
         user.email = email;
         user.password = await this.hashPassword(password, user.salt);
+        user.firstName = firstName;
+        user.lastName = lastName;
 
         try {
             await user.save();
