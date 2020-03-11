@@ -3,7 +3,7 @@ import {CreateProjectDto} from "./dto/create-project.dto";
 import {ProjectRepository} from "./project.repository";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Project} from "./project.entity";
-import {ProjectStatusEnum} from "./project-status.enum";
+import {ProjectStatusEnum} from "./data/project-status.enum";
 import {GetProjectsFilterDto} from "./dto/get-projects-filter.dto";
 import {User} from "../users/user.entity";
 import {UpdateProjectDto} from "./dto/update-project.dto";

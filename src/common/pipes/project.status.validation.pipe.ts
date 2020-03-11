@@ -1,5 +1,5 @@
 import {PipeTransform, UnprocessableEntityException} from "@nestjs/common";
-import {ProjectStatusEnum} from "../project-status.enum";
+import {ProjectStatusEnum} from "../../projects/data/project-status.enum";
 
 export class ProjectStatusValidationPipe implements PipeTransform {
     readonly allowedStatuses = [

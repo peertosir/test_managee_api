@@ -13,11 +13,11 @@ import {
 import {ProjectsService} from "./projects.service";
 import {CreateProjectDto} from "./dto/create-project.dto";
 import {GetProjectsFilterDto} from "./dto/get-projects-filter.dto";
-import {ProjectStatusValidationPipe} from "./pipes/project.status.validation.pipe";
+import {ProjectStatusValidationPipe} from "../common/pipes/project.status.validation.pipe";
 import {Project} from "./project.entity";
-import {ProjectStatusEnum} from "./project-status.enum";
+import {ProjectStatusEnum} from "./data/project-status.enum";
 import {AuthGuard} from "@nestjs/passport";
-import {GetUser} from "../auth/decorators/get-user.decorator";
+import {GetUser} from "../common/decorators/get-user.decorator";
 import {User} from "../users/user.entity";
 import {UpdateProjectDto} from "./dto/update-project.dto";
 import {UsersService} from "../users/users.service";

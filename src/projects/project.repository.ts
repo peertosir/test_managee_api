@@ -1,7 +1,7 @@
 import {EntityRepository, Repository} from "typeorm";
 import {Project} from "./project.entity";
 import {CreateProjectDto} from "./dto/create-project.dto";
-import {ProjectStatusEnum} from "./project-status.enum";
+import {ProjectStatusEnum} from "./data/project-status.enum";
 import {GetProjectsFilterDto} from "./dto/get-projects-filter.dto";
 import {User} from "../users/user.entity";
 

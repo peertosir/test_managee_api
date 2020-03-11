@@ -8,7 +8,7 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn
 } from "typeorm";
-import {ProjectStatusEnum} from "./project-status.enum";
+import {ProjectStatusEnum} from "./data/project-status.enum";
 import {User} from "../users/user.entity";
 import {Transform} from "class-transformer";
 
