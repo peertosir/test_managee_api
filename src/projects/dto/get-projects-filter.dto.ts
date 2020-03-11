@@ -1,5 +1,5 @@
 import {IsIn, IsNotEmpty, IsOptional} from "class-validator";
-import {ProjectStatusEnum} from "../project-status.enum";
+import {ProjectStatusEnum} from "../data/project-status.enum";
 
 export class GetProjectsFilterDto {
 
