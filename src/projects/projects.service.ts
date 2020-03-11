@@ -40,7 +40,7 @@ export class ProjectsService {
     async deleteProject(id: number): Promise<void> {
         const result = await this.projectRepository.delete(id);
         if (result.affected === 0) {
-            throw new NotFoundException('Task not exist')
+            throw new NotFoundException('Project not exist')
         }
     }
 
@@ -55,7 +55,7 @@ export class ProjectsService {
 
     async updateProject(id: number, updateProjectDto: UpdateProjectDto) {
         const project = await this.getProjectById(id);
-        const {title, description, project_manager, responsible_qa, qa_team} = updateProjectDto;
+        const {title, description, project_manager, responsible_qa, qa_team, urls} = updateProjectDto;
         if (project_manager) {
             project.project_manager = await this.usersService.getUserById(project_manager);
         }
@@ -70,6 +70,9 @@ export class ProjectsService {
         }
         if (description) {
             project.description = description;
+        }
+        if (urls) {
+            project.urls = urls;
         }
 
         await project.save();

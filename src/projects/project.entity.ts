@@ -22,6 +22,8 @@ export class Project extends BaseEntity{
     description: string;
     @Column()
     status: ProjectStatusEnum;
+    @Column("text", {array: true, default: '{}'})
+    urls: string[];
 
     @ManyToOne(type => User, user => user.pm_projects, {eager: true})
     @JoinColumn({ name: "project_manager_id" })

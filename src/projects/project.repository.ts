@@ -15,6 +15,7 @@ export class ProjectRepository extends Repository<Project> {
         project.status = ProjectStatusEnum.IDLE;
         project.project_manager = user;
         project.qa_team = [user, ];
+        project.urls = [];
         await project.save();
 
         return project;
@@ -32,8 +33,6 @@ export class ProjectRepository extends Repository<Project> {
                 {search: `%${search}%`}
                 )
         }
-        const projects = await query.leftJoinAndSelect(User, 'user1',
-            'user1.id = project.project_manager_id').getMany();
-        return projects;
+        return await query.getMany();
     }
 }
