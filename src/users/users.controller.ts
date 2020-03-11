@@ -5,13 +5,15 @@ import {
     Get,
     Param,
     ParseIntPipe,
-    Patch,
+    Patch, UseGuards,
     UseInterceptors
 } from '@nestjs/common';
 import {UsersService} from "./users.service";
 import {UpdateUserDto} from "./dto/update-user.dto";
+import {AuthGuard} from "@nestjs/passport";
 
 @Controller('api/users')
+@UseGuards(AuthGuard())
 @UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
     constructor(private usersService: UsersService){}
