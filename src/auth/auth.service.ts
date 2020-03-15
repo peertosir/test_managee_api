@@ -19,7 +19,7 @@ export class AuthService {
 
 
     async signIn(authDto: AuthDto): Promise<{accessToken: string}> {
-        const email = await this.validatePassword(authDto);
+        const email: string = await this.validatePassword(authDto);
 
         if (!email) {
             throw new UnauthorizedException("Invalid credentials")

@@ -16,7 +16,7 @@ export class ProjectStatusValidationPipe implements PipeTransform {
         return value;
     }
 
-    private isStatusValid(status:any) {
+    private isStatusValid(status:any): boolean {
         const idx = this.allowedStatuses.indexOf(status);
         return idx !== -1;
     }

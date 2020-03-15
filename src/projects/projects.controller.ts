@@ -20,7 +20,6 @@ import {AuthGuard} from "@nestjs/passport";
 import {GetUser} from "../common/decorators/get-user.decorator";
 import {User} from "../users/user.entity";
 import {UpdateProjectDto} from "./dto/update-project.dto";
-import {UsersService} from "../users/users.service";
 
 
 @Controller('api/projects')
@@ -62,7 +61,7 @@ export class ProjectsController {
     updateProjectStatus(
         @Param('id', ParseIntPipe) id: number,
         @Body('status', ProjectStatusValidationPipe) status: ProjectStatusEnum
-    ) {
+    ): Promise<Project> {
         return this.projectsService.updateProjectStatus(id, status);
     }
 
@@ -71,7 +70,7 @@ export class ProjectsController {
     updateProject(
         @Param('id', ParseIntPipe) id: number,
         @Body(ValidationPipe) updateProjectDto: UpdateProjectDto
-    ) {
+    ): Promise<Project> {
         return this.projectsService.updateProject(id, updateProjectDto);
     }
 }

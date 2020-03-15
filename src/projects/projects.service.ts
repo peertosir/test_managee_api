@@ -63,7 +63,7 @@ export class ProjectsService {
             project.responsible_qa = await this.usersService.getUserById(responsible_qa);
         }
         if (qa_team) {
-            project.qa_team = await this.usersService.getUsersById(qa_team);
+            project.qa_team = await this.usersService.getUsers(qa_team);
         }
         if (title) {
             project.title = title;
