@@ -9,11 +9,11 @@ import {UpdateUserDto} from "./dto/update-user.dto";
 export class UsersService {
     constructor(@InjectRepository(UserRepository) private userRepository:UserRepository) {}
 
-    async createUser(createUserDto: CreateUserDto) {
+    async createUser(createUserDto: CreateUserDto): Promise<void> {
         return await this.userRepository.createUser(createUserDto);
     }
 
-    async updateUser(id:number, updateUserDto: UpdateUserDto) {
+    async updateUser(id:number, updateUserDto: UpdateUserDto): Promise<User> {
         const user = await this.getUserById(id);
         const {email, firstName, lastName} = updateUserDto;
         if (email) {
@@ -30,7 +30,7 @@ export class UsersService {
         return user
     }
 
-    async getUserByEmail(user_email: string) {
+    async getUserByEmail(user_email: string): Promise<User> {
         const result = await this.userRepository.getUserByEmail(user_email);
         if (!result) {
             throw new NotFoundException('User not found')
@@ -38,9 +38,6 @@ export class UsersService {
         return result;
     }
 
-    async getUsersById(users: number[]) {
-        return await this.userRepository.findByIds(users);
-    }
 
     async getUserById(user_id: number): Promise<User> {
         const result = await this.userRepository.findOne({id: user_id});
@@ -50,11 +47,14 @@ export class UsersService {
         return result;
     }
 
-    async getUsers() {
-        return this.userRepository.find();
+    async getUsers(users?: number[]): Promise<User[]> {
+        if (users) {
+            return await this.userRepository.findByIds(users);
+        }
+        return await this.userRepository.find();
     }
 
-    async banUser(id: number) {
+    async banUser(id: number): Promise<void> {
         const user = await this.getUserById(id);
         if (user.banned) {
             throw new UnprocessableEntityException("User already banned");

@@ -30,7 +30,7 @@ export class UserRepository extends Repository<User> {
     }
 
 
-    async getUserByEmail(email: string) {
+    async getUserByEmail(email: string): Promise<User> {
         return await this.findOne({email});
     }
 

@@ -11,6 +11,7 @@ import {
 import {UsersService} from "./users.service";
 import {UpdateUserDto} from "./dto/update-user.dto";
 import {AuthGuard} from "@nestjs/passport";
+import { User } from './user.entity';
 
 @Controller('api/users')
 @UseGuards(AuthGuard())
@@ -19,17 +20,17 @@ export class UsersController {
     constructor(private usersService: UsersService){}
 
     @Get('/:id')
-    getUserById(@Param('id', ParseIntPipe) id: number) {
+    getUserById(@Param('id', ParseIntPipe) id: number): Promise<User> {
         return this.usersService.getUserById(id);
     }
 
     @Get()
-    getUsers() {
+    getUsers(): Promise<User[]> {
         return this.usersService.getUsers();
     }
 
     @Patch('/:id')
-    updateUser(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
+    updateUser(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto): Promise<User> {
         return this.usersService.updateUser(id, updateUserDto);
     }
 
