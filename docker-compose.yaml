@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=testmanagee
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1
+    ports:
+    - 5432:5432
