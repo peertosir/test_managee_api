@@ -20,7 +20,8 @@ export class User extends BaseEntity {
     @Column()
     @Exclude()
     salt: string;
-
+    @Column({default:false})
+    is_admin: boolean;
     @Column({default:false})
     banned: boolean;
 

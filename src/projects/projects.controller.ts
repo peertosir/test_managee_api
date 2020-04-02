@@ -20,10 +20,12 @@ import {AuthGuard} from "@nestjs/passport";
 import {GetUser} from "../common/decorators/get-user.decorator";
 import {User} from "../users/user.entity";
 import {UpdateProjectDto} from "./dto/update-project.dto";
+import { ProjectRolesGuard } from '../common/guards/project-roles.guard';
+import { Roles } from '../common/decorators/roles.decorator';
 
 
 @Controller('api/projects')
-@UseGuards(AuthGuard())
+@UseGuards(AuthGuard(), ProjectRolesGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 export class ProjectsController {
 
@@ -45,30 +47,34 @@ export class ProjectsController {
     };
 
 
-    @Get('/:id')
-    getProjectById(@Param('id', ParseIntPipe) id:number): Promise<Project>  {
+    @Get('/:project_id')
+    @Roles('qa_team', 'project_manager', 'responsible_qa')
+    getProjectById(@Param('project_id', ParseIntPipe) id:number): Promise<Project>  {
         return this.projectsService.getProjectById(id);
     };
 
 
-    @Delete('/:id')
-    deleteProject(@Param('id', ParseIntPipe) id:number): Promise<void> {
+    @Delete('/:project_id')
+    @Roles('project_manager')
+    deleteProject(@Param('project_id', ParseIntPipe) id:number): Promise<void> {
         return this.projectsService.deleteProject(id);
     }
 
 
-    @Patch('/:id/update_status')
+    @Patch('/:project_id/update_status')
+    @Roles('qa_team', 'project_manager', 'responsible_qa')
     updateProjectStatus(
-        @Param('id', ParseIntPipe) id: number,
+        @Param('project_id', ParseIntPipe) id: number,
         @Body('status', ProjectStatusValidationPipe) status: ProjectStatusEnum
     ): Promise<Project> {
         return this.projectsService.updateProjectStatus(id, status);
     }
 
 
-    @Patch('/:id')
+    @Patch('/:project_id')
+    @Roles('qa_team', 'project_manager', 'responsible_qa')
     updateProject(
-        @Param('id', ParseIntPipe) id: number,
+        @Param('project_id', ParseIntPipe) id: number,
         @Body(ValidationPipe) updateProjectDto: UpdateProjectDto
     ): Promise<Project> {
         return this.projectsService.updateProject(id, updateProjectDto);
