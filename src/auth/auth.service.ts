@@ -4,6 +4,7 @@ import {JwtPayloadInterface} from "./jwt/jwt-payload.interface";
 import {AuthDto} from "./dto/auth.dto";
 import {UsersService} from "../users/users.service";
 import {CreateUserDto} from "../users/dto/create-user.dto";
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -18,9 +19,9 @@ export class AuthService {
     }
 
 
-    async signIn(authDto: AuthDto): Promise<{accessToken: string}> {
+    async signIn(authDto: AuthDto): Promise<{accessToken: string, id: number}> {
         const email: string = await this.validatePassword(authDto);
-
+        const user = await this.usersService.getUserByEmail(email);
         if (!email) {
             throw new UnauthorizedException("Invalid credentials")
         }
@@ -28,7 +29,7 @@ export class AuthService {
 
         const accessToken = this.jwtService.sign(payload);
 
-        return {accessToken};
+        return {accessToken, id: user.id};
     }
 
     async validatePassword(authDto:AuthDto): Promise<string> {
