@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException, UnprocessableEntityException} from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {UserRepository} from "./user.repository";
 import {CreateUserDto} from "./dto/create-user.dto";
@@ -33,7 +33,7 @@ export class UsersService {
     async getUserByEmail(user_email: string): Promise<User> {
         const result = await this.userRepository.getUserByEmail(user_email);
         if (!result) {
-            throw new NotFoundException('User not found')
+            throw new UnauthorizedException("Invalid credentials")
         }
         return result;
     }
